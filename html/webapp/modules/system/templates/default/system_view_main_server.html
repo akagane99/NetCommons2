@@ -137,7 +137,7 @@
 				<tr class="row">
 					<th scope="row"><{$lang.system_ldap_uses|smarty:nodefaults}></th>
 					<td class="system_body">
-						<input id="ldap_uses_1<{$id}>" name="ldap_uses" type="radio" value="<{$smarty.const._ON}>" <{if $config.ldap_uses.conf_value == $smarty.const._ON}> checked="checked"<{/if}> onclick="systemCls['<{$id}>'].visible(this, 'system_below')" />
+						<input id="ldap_uses_1<{$id}>" name="ldap_uses" type="radio" value="<{$smarty.const._ON}>" <{if $config.ldap_uses.conf_value == $smarty.const._ON}> checked="checked"<{/if}> onclick="if($('openid_uses_1<{$id}>').checked){commonCls.alert('<{$lang.system_ldap_cannot_active_because_of_openid|smarty:nodefaults}>'); $('ldap_uses_0<{$id}>').checked = true; return false;} else {systemCls['<{$id}>'].visible(this, 'system_below');}" />
 						<label for="ldap_uses_1<{$id}>"><{$lang.system_yes|smarty:nodefaults}></label>
 						<input id="ldap_uses_0<{$id}>" name="ldap_uses" type="radio" value="<{$smarty.const._OFF}>" <{if $config.ldap_uses.conf_value == $smarty.const._OFF}> checked="checked"<{/if}> onclick="systemCls['<{$id}>'].hidden(this, 'system_below')" />
 						<label for="ldap_uses_0<{$id}>"><{$lang.system_no|smarty:nodefaults}></label>
@@ -155,6 +155,59 @@
 					<td>
 						<input id="ldap_domain<{$id}>" name="ldap_domain" type="text" value="<{$config.ldap_domain.conf_value}>" size='30' />
 						<div class="note system_note_width"><{$lang.system_ldap_domain_note|smarty:nodefaults}></div>
+					</td>
+				</tr>
+				</table>
+			</fieldset>
+		</div>
+
+		<div class="tab_openid">
+			<fieldset>
+				<legend><{$lang.system_openid_title|smarty:nodefaults}></legend>
+				<table class="outer system_setting" summary="<{$smarty.const._SUMMARY_SETTINGITEM}>">
+				<tr class="row">
+					<th scope="row"><{$lang.system_openid_uses|smarty:nodefaults}></th>
+					<td class="system_body">
+						<input id="openid_uses_1<{$id}>" name="openid_uses" type="radio" value="<{$smarty.const._ON}>" <{if $config.openid_uses.conf_value == $smarty.const._ON}> checked="checked"<{/if}> onclick="if($('ldap_uses_1<{$id}>').checked){commonCls.alert('<{$lang.system_openid_cannot_active_because_of_ldap|smarty:nodefaults}>'); $('openid_uses_0<{$id}>').checked = true; return false;} else {systemCls['<{$id}>'].visible(this, 'system_below');}" />
+						<label for="openid_uses_1<{$id}>"><{$lang.system_yes|smarty:nodefaults}></label>
+						<input id="openid_uses_0<{$id}>" name="openid_uses" type="radio" value="<{$smarty.const._OFF}>" <{if $config.openid_uses.conf_value == $smarty.const._OFF}> checked="checked"<{/if}> onclick="systemCls['<{$id}>'].hidden(this, 'system_below')" />
+						<label for="openid_uses_0<{$id}>"><{$lang.system_no|smarty:nodefaults}></label>
+					</td>
+				</tr>
+				<tr class="row system_below<{if $config.openid_uses.conf_value == $smarty.const._OFF}> display-none<{/if}>">
+					<th scope="row"><label for="openid_opids<{$id}>"><{$lang.system_openid_opids|smarty:nodefaults}></label></th>
+					<td>
+						<input id="openid_opids<{$id}>" name="openid_opids" type="text" value="<{$config.openid_opids.conf_value}>" size='70' />
+						<div class="note system_note_width"><{$lang.system_openid_opids_note|smarty:nodefaults}></div>
+					</td>
+				</tr>
+				<tr class="row system_below<{if $config.openid_uses.conf_value == $smarty.const._OFF}> display-none<{/if}>">
+					<th scope="row"><label for="openid_opnames<{$id}>"><{$lang.system_openid_opnames|smarty:nodefaults}></label></th>
+					<td>
+						<input id="openid_opnames<{$id}>" name="openid_opnames" type="text" value="<{$config.openid_opnames.conf_value}>" size='70' />
+						<div class="note system_note_width"><{$lang.system_openid_opnames_note|smarty:nodefaults}></div>
+					</td>
+				</tr>
+				</table>
+			</fieldset>
+		</div>
+
+		<div class="tab_shibboleth">
+			<fieldset>
+				<legend><{$lang.system_shibboleth_title|smarty:nodefaults}></legend>
+				<table class="outer system_setting" summary="<{$smarty.const._SUMMARY_SETTINGITEM}>">
+				<tr class="row">
+					<th scope="row"><{$lang.system_use_external|smarty:nodefaults}></th>
+					<td>
+						<label for="use_external_1<{$id}>">
+							<input type="radio" name="use_external" id="use_external_1<{$id}>" value="<{$smarty.const._ON}>" <{if $config.use_external.conf_value == $smarty.const._ON}>checked="checked"<{/if}> />
+							<{$lang.system_yes|smarty:nodefaults}>
+						</label>
+						<label for="use_external_0<{$id}>">
+							<input type="radio" name="use_external" id="use_external_0<{$id}>" value="<{$smarty.const._OFF}>" <{if $config.use_external.conf_value == $smarty.const._OFF}>checked="checked"<{/if}> />
+							<{$lang.system_no|smarty:nodefaults}>
+						</label>
+						<div class="note system_note_width"><{$lang.system_use_external_note|smarty:nodefaults}></div>
 					</td>
 				</tr>
 				</table>

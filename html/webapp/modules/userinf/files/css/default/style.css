@@ -275,3 +275,26 @@ a.userinf_withdraw_popup_act_btn .userinf_withdraw_popup_inside_btn
 	height:150px;
 	width:330px;
 }
+/* SSO情報 */
+.userinf_sso_header_sso {width:100px;}
+.userinf_sso_header_status {width:200px;}
+.userinf_sso_header_processing {width:30px;}
+
+table.userinf_sso_list {
+	border-collapse:collapse;
+	width:100%;
+	margin:0px;
+	padding:0px;
+	border:1px solid #cccccc;
+}
+table.userinf_sso_list th {
+	padding:2px 8px; border:0px;
+	background-color:#f2f3f1;
+	white-space:nowrap;
+	font-weight:normal;
+}
+table.userinf_sso_list td {
+	border:1px solid #cccccc;
+	padding:2px 8px;
+	white-space:nowrap;
+}

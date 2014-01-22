@@ -329,6 +329,9 @@ clsUserinf.prototype = {
 		var tabset = new compTabset(top_el);
 		tabset.render();
 	},
+	/* SSO情報 */
+	initSsoinfo: function() {
+	},
 	/* 以上の内容を了解する */
 	withdrawAccept: function(this_el) {
 		var next_btn_el = $("userinf_next" + this.id);

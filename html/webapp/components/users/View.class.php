@@ -405,7 +405,8 @@ class Users_View
 			&& $tag_name != 'user_name'
 			&& $tag_name != 'email'
 			&& $tag_name != 'mobile_texthtml_mode'
-			&& $tag_name != 'mobile_imgdsp_size') {
+			&& $tag_name != 'mobile_imgdsp_size'
+			&& $tag_name != 'openid_url') {
 			return true;
 		}
 

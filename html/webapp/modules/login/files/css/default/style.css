@@ -50,6 +50,23 @@ label.login_label {
 .login_detail_detail {
 	padding:2px;
 }
+.login_detail_head_input {
+	text-align:left;
+	vertical-align:top;
+	padding:5px 8px 2px 8px !important;
+}
+.login_detail_detail_input {
+	padding:5px 5px 2px 5px;
+}
+.login_detail_head_confirm {
+	text-align:left;
+	vertical-align:top;
+	padding:2px 8px 5px 8px !important;
+}
+.login_detail_detail_confirm {
+	padding:2px 5px 5px 5px;
+}
+
 .login_desc {
 	padding-left:5px;
 	color:#af2c4d;
@@ -93,12 +110,12 @@ iframe.login_popup_ie7padding {
 div.login_ssl_outer,
 div.login_ssl_outer iframe,
 form.login_ssl_outer {
-	height:195px;
+/*	height:195px; */
 }
 div.login_ssl_outer_rememberme,
 div.login_ssl_outer_rememberme iframe,
 form.login_ssl_outer_rememberme {
-	height:220px;
+/*	height:220px; */
 }
 
 div.login_rememberme {
@@ -111,10 +128,13 @@ div.login_ssl_outer div.login_popup_sslcancel_btn {
 }
 div.login_ssl_outer div.login_popup_sslcancel_btn {
 	margin-top:-63px;
-}	
+}
 div.login_ssl_outer_rememberme div.login_popup_sslcancel_btn {
 	margin-top:-88px;
-}	
+}
+div.login_ssl_outer_shibboleth div.login_popup_sslcancel_btn {
+	margin-bottom: -5px !important;
+}
 
 .login_ssl_font {
 	text-align:left;
@@ -161,6 +181,130 @@ div.login_forgetpass_link {
 	font-weight:bold;
 	padding-top:5px;
 }
+div.login_ssl_outer div.login_forgetpass_link,
+div.login_ssl_outer_rememberme div.login_forgetpass_link {
+	padding-right:10px;
+}
+div.login_ssl_outer div.login_forgetpass_link {
+	padding-top: 9px;
+}
+div.login_ssl_outer_rememberme div.login_forgetpass_link {
+	padding-top: 11px;
+}
+div.login_ssl_outer_shibboleth div.login_forgetpass_link {
+	padding-top:5px !important;
+}
 br.login_offset_height {
 	line-height:2em;
+}
+div.login_ssl_outer_shibboleth br.login_offset_height {
+	line-height:0.7em;
+}
+
+/* Shibboleth */
+div.login_during_login {
+    margin-top:50px;
+    margin-left:10px;
+}
+input.login_during_login_button {
+    margin-top:65px;
+    margin-left:34px;
+}
+div.login_mapping_description {
+	line-height: 1.8em;
+}
+div.login_mapping_cancel_btn {
+	margin-top:-45px !important;
+	margin-left:136px !important;
+}
+
+.login_mapping_iframe {
+	margin-top: 15px ;
+}
+table.login_mapping_outer {
+	margin-top: 10px;
+}
+table.login_mapping_outer td {
+	width: 50%;
+	vertical-align: top;
+}
+.login_mapping_newaccount_btn {
+	margin: 50px 50px 50px 50px;
+	text-align: center;
+
+}
+.login_mapping_newaccount_btn input.login_login_button {
+	font-size: small;
+	margin-right: 10px;
+}
+.login_mapping_table_exists_account {
+	border-right: 1px solid #E9E9E9;
+	padding: 15px 15px 20px 0px;
+}
+.login_mapping_table_no_account {
+	border-left: 1px solid #E9E9E9;
+	padding:15px 0px 20px 15px;
+}
+
+/* Shibboleth(学認)関連 */
+div.login_embedded_opid_list_link,
+div.login_embedded_ds_link {
+	text-align:right;
+	font-weight:bold;
+	padding-top:5px;
+}
+
+/* 外部連携用ポップアップ */
+.login_external_popup {
+	background-color: #FFFFFF;
+	border: 1px solid #C7C7C7;
+	border-radius: 5px 5px 5px 5px;
+	margin: 50px;
+	padding: 30px 50px;
+}
+
+.login_external_popup_mapping {
+	width: 620px;
+}
+.login_external_popup_autoregist {
+	width: 620px;
+}
+.login_external_popup_logging {
+	width: 620px;
+}
+.login_external_popup_confirm {
+	width: 480px;
+}
+.login_external_popup h2.th_login_blocktitle {
+	font-size: 150%;
+	line-height: normal;
+	margin: 0 0 5px;
+	padding: 5px;
+}
+
+.login_external_popup div.login_ssl_outer_rememberme {
+	height:auto;
+}
+.login_external_popup iframe.login_mapping_iframe {
+	height:155px;
+}
+.login_external_popup div.login_mapping_cancel_btn {
+	margin-top: -52px !important;
+}
+
+.login_external_popup .redirect_main {
+	margin: 60px 0px 50px 30px;
+}
+
+.login_popup_outertable {
+	margin-top: 20px;
+	margin-bottom: 30px;
+}
+
+.login_external_popup th.login_detail_head {
+	font-weight: normal;
+	padding: 1px 10px !important;
+}
+.login_external_popup td.login_detail_detail {
+	padding: 1px;
 }

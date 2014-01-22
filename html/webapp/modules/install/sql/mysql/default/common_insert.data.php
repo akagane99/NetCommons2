@@ -92,6 +92,7 @@ INSERT INTO `items` (`item_id`, `item_name`, `type`, `tag_name`, `system_flag`, 
 INSERT INTO `items` (`item_id`, `item_name`, `type`, `tag_name`, `system_flag`, `require_flag`, `define_flag`, `display_flag`, `allow_public_flag`, `allow_email_reception_flag`, `col_num`, `row_num`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (23, 'USER_ITEM_MODULES_INFO', 'system', 'userinf_view_main_modulesinfo', 1, 0, 1, 1, 0, 0, 0, 0, '', '', '', '', '', '', '', '');
 INSERT INTO `items` (`item_id`, `item_name`, `type`, `tag_name`, `system_flag`, `require_flag`, `define_flag`, `display_flag`, `allow_public_flag`, `allow_email_reception_flag`, `col_num`, `row_num`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (24, 'USER_ITEM_TEXTHTML_MODE', 'radio', 'mobile_texthtml_mode', 1, 0, 1, 0, 0, 0, 1, 11, '', '', '', '', '', '', '', '');
 INSERT INTO `items` (`item_id`, `item_name`, `type`, `tag_name`, `system_flag`, `require_flag`, `define_flag`, `display_flag`, `allow_public_flag`, `allow_email_reception_flag`, `col_num`, `row_num`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (25, 'USER_ITEM_IMGDSP_SIZE', 'radio', 'mobile_imgdsp_size', 1, 0, 1, 0, 0, 0, 1, 12, '', '', '', '', '', '', '', '');
+INSERT INTO `items` (`item_id`, `item_name`, `type`, `tag_name`, `system_flag`, `require_flag`, `define_flag`, `display_flag`, `allow_public_flag`, `allow_email_reception_flag`, `col_num`, `row_num`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (26, 'USER_ITEM_SSO_INFO', 'system', 'userinf_view_main_ssoinfo', 1, 0, 1, 1, 0, 0, 0, 0, '', '', '', '', '', '', '', '');
 
 # --
 # -- テーブルのダンプデータ `items_authorities_link`
@@ -221,6 +222,11 @@ INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_pub
 INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (25, 3, 1, 2, 0, '', '', '', '', '', '', '', '');
 INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (25, 4, 1, 2, 0, '', '', '', '', '', '', '', '');
 INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (25, 5, 2, 2, 2, '', '', '', '', '', '', '', '');
+INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (26, 1, 0, 1, 0, '', '', '', '', '', '', '', '');
+INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (26, 2, 0, 1, 0, '', '', '', '', '', '', '', '');
+INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (26, 3, 1, 1, 0, '', '', '', '', '', '', '', '');
+INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (26, 4, 1, 1, 0, '', '', '', '', '', '', '', '');
+INSERT INTO `items_authorities_link` (`item_id`, `user_authority_id`, `under_public_flag`, `self_public_flag`, `over_public_flag`, `insert_time`, `insert_site_id`, `insert_user_id`, `insert_user_name`, `update_time`, `update_site_id`, `update_user_id`, `update_user_name`) VALUES (26, 5, 1, 1, 1, '', '', '', '', '', '', '', '');
 
 # --
 # -- テーブルのダンプデータ `items_desc`
@@ -250,7 +256,7 @@ INSERT INTO `items_options` (`item_id`, `options`, `default_selected`) VALUES (2
 # -- テーブルのダンプデータ `items_seq_id`
 # --
 
-INSERT INTO `items_seq_id` (`id`) VALUES (25);
+INSERT INTO `items_seq_id` (`id`) VALUES (26);
 
 # --
 # -- テーブルのダンプデータ `javascript_files`

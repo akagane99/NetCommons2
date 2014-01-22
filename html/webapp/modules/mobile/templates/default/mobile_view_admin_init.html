@@ -188,6 +188,28 @@
 	</div>
 </div>
 
+<div class="outerdiv">
+	<div class="bold">
+		<{$lang.mobile_use_ketai_openid_title|smarty:nodefaults}>
+	</div>
+	<div class="top_description">
+		<div>
+			<{$lang.mobile_use_ketai_openid_desc|smarty:nodefaults}>
+		</div>
+	</div>
+	<div class="mobile_edit">
+		<label for="mobile_use_ketai_openid<{$id}>_off">
+			<input id="mobile_use_ketai_openid<{$id}>_off" name="mobile_use_ketai_openid" type="radio" value="<{$smarty.const._OFF}>"<{if ($action.mobile_use_ketai_openid == _OFF) }> checked="checked"<{/if}> onclick='mobileCls["<{$id}>"].switchUseKetaiOpenid(this);' />
+			<{$lang.mobile_use_ketai_openid_off|smarty:nodefaults}>
+		</label>
+		&nbsp;&nbsp;&nbsp;
+		<label for="mobile_use_ketai_openid<{$id}>_on">
+			<input id="mobile_use_ketai_openid<{$id}>_on" name="mobile_use_ketai_openid" type="radio" value="<{$smarty.const._ON}>"<{if ($action.mobile_use_ketai_openid == _ON) }> checked="checked"<{/if}> onclick='mobileCls["<{$id}>"].switchUseKetaiOpenid(this);' />
+			<{$lang.mobile_use_ketai_openid_on|smarty:nodefaults}>
+		</label>
+	</div>
+</div>
+
 <{include file="./mobile_script.html"}>
 <script class="nc_script" type="text/javascript">
 commonCls.closeCallbackFuncEvent["<{$id}>"] = function() {

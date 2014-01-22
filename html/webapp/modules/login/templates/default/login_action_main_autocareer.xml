@@ -1,0 +1,26 @@
+<{* 掲示板一覧用XML *}>
+<?xml version="1.0" encoding="<{$smarty.const._CHARSET}>"?>
+<{strip}>
+<lists>
+	<name_ja>
+		<![CDATA[
+			<{$action.name_ja}>
+		]]>
+	</name_ja>
+	<name_en>
+		<![CDATA[
+			<{$action.name_en}>
+		]]>
+	</name_en>
+	<affiliation>
+		<![CDATA[
+			<{$action.affiliation}>
+		]]>
+	</affiliation>
+	<section>
+		<![CDATA[
+			<{$action.section}>
+		]]>
+	</section>
+</lists>
+<{/strip}>

@@ -64,7 +64,45 @@
 			<{/if}>
 		<{/foreach}>
 	<{/foreach}>
+
+
+  	<{if ($smarty.session._smartphone_flag == _ON) }>
+   		<h3 class="ui-bar-<{$smartphone_theme_color}> ui-title">
+   			<{$lang.userinf_view_main_ssoinfo}>
+   		</h3>
+   	<{else}>
+   		<div style="text-align:center;background-color:<{$color_text}>;">
+   			<span style="color:<{$color_back}>;">
+   				<{$lang.userinf_view_main_ssoinfo}>
+   			</span>
+   		</div>
+   	<{/if}>
+
+    <{if $action.openid_uses == "1"}>
+    	<{if $action.openid_cnt > 0}>
+    		<{$lang.userinf_openid_cnt_info|smarty:nodefaults|sprintf:$action.openid_cnt|smarty:nodefaults}>
+    		<{if $smarty.session._user_id == $action.user_id}>
+    			<div style="text-align:right;">
+    				<form action=".<{$smarty.const.INDEX_FILE_NAME}>" method="post">
+    					<input type="hidden" name="action" value="userinf_action_mobile_delsso">
+    					<input type="hidden" name="user_id" value="<{$action.user_id}>">
+    					<input type="hidden" name="auth_type" value="1">
+    					<input type="submit" value="<{$lang.userinf_openid_clear}>">
+    					<{$token_form|smarty:nodefaults}>
+    					<{$session_form|smarty:nodefaults}>
+    				</form>
+    			</div>
+    		<{/if}>
+    	<{else}>
+    		<{$lang.userinf_no_openid|smarty:nodefaults}>
+    	<{/if}>
+	<{else}>
+		<{$lang.userinf_openid_is_not_supported|smarty:nodefaults}>
+	<{/if}>
+
+
 	<{if $smarty.session._user_id == $action.user_id}>
+	<br /><br />
 	<div style="text-align:center;">
 		<form action=".<{$smarty.const.INDEX_FILE_NAME}>" method="post">
 			<input type="hidden" name="action" value="userinf_view_mobile_userdetail_edit">

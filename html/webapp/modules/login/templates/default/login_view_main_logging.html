@@ -1,0 +1,50 @@
+<{strip}>
+
+<{if ($action.iframe == _ON) }>
+	<div class="login_during_login">
+		<{$lang.login_logging_message|smarty:nodefaults}>
+	</div>
+<{else}>
+	<table class="redirect_main" summary="">
+		<tr>
+			<td class="valign-top"><img src="<{""|get_image_url}>/images/common/redirect_arrorw.gif" title="" alt="" /></td>
+			<td class="redirect_text">
+				<{$lang.login_logging_message|smarty:nodefaults}>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td class="redirect_subtext" style="padding-top:25px">
+				<div style="border:2px solid red; padding:20px;">
+					<{$lang.login_logging_announce|smarty:nodefaults}>
+				</div>
+			</td>
+		</tr>
+		<tr>
+			<td>&nbsp;</td>
+			<td class="redirect_subtext" style="padding-top:25px">
+				<{$lang.login_ifnotreload|smarty:nodefaults|sprintf:"$(\"login_form_0\").submit();"}>
+			</td>
+		</tr>
+	</table>
+<{/if}>
+
+<form id="login_form<{$id}>" method="post" action="<{if $smarty.server.HTTPS|lower == 'on'}><{$smarty.const.BASE_URL_HTTPS}><{else}><{$smarty.const.BASE_URL}><{/if}><{$smarty.const.INDEX_FILE_NAME}><{if ($smarty.session.login_redirect_url != "") }>?_redirect_url=<{$smarty.session.login_redirect_url}><{/if}>" target="targetFrame<{$id}>">
+	<input type="hidden" name="action" value="login_action_main_init" />
+	<input type="hidden" name="redirect_action" value="<{$action.redirect_action}>" />
+	<input type="hidden" name="block_id" value="<{$action.block_id}>" />
+	<input type="hidden" name="_token" value="<{$action.token_value}>" />
+
+	<input type="hidden" name="login_id" value="" />
+	<input type="hidden" name="password" value="" />
+</form>
+<iframe id="targetFrame<{$id}>" name="targetFrame<{$id}>" class="display-none"></iframe>
+
+
+<{include file="login_script.html"}>
+<script class="nc_script" type="text/javascript">
+setTimeout( function() {
+	$("login_form<{$id}>").submit();
+}, <{$action.submit_time}>);
+</script>
+<{/strip}>

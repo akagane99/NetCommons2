@@ -4,6 +4,10 @@
 <{else}>
 	<form method="post" action=".<{$smarty.const.INDEX_FILE_NAME}>"<{if ($smarty.session._mobile_info.autologin == _AUTOLOGIN_OK) }><{$smarty.session._mobile_info.utn}><{/if}>>
 		<div>
+			<{if $action.openid_uses == 1 && $action.openid_url != null}>
+				<span style="color:red"><{$lang.login_loginwithopenid_msg|smarty:nodefaults}></span>
+				<br />
+			<{/if}>
 			<{$lang.login_name|smarty:nodefaults}>
 			<br />
 			<input type="text" name="uid" value="<{$action.login_id}>">
@@ -35,6 +39,11 @@
 			&nbsp;
 		<{/if}>
 		<a href="?action=login_view_main_forgetpass<{$session_param}>"><{$lang.login_mobile_lost_password}></a>
+		<{if $action.openid_uses == 1 && $action.openid_url == null}>
+			&nbsp;
+			&nbsp;
+			<a href="?action=login_view_mobile_openid_rp_tryauth<{$session_param}>"><{$lang.login_mobile_openid_login}></a>
+		<{/if}>
 	</div>
 <{/if}>
 <{/strip}>

@@ -11,6 +11,8 @@ if(!userinfCls["<{$id}>"]) {
 	userinfCls["<{$id}>"].initRoom(<{$action.count}>, <{$conf.useinf_room_list}>);
 <{elseif $action_name == "userinf_view_main_modulesinfo" }>
 	userinfCls["<{$id}>"].initModulesinfo();
+<{elseif $action_name == "userinf_view_main_ssoinfo" }>
+	userinfCls["<{$id}>"].initSsoinfo();
 <{/if}>
 </script>
 <{/strip}>

@@ -47,6 +47,8 @@ class Login_Action_Main_Init extends Action
 	var $pagesView = null;
 	var $commonMain = null;
 
+	//Shibboleth
+	var $loginAction = null;
 	var $redirect_url = null;
 
     /**
@@ -85,6 +87,16 @@ class Login_Action_Main_Init extends Action
 	    // プライベートスペースに対する
 		// アップロードの最大容量
 	    $this->session->setParameter("_private_max_size", $this->max_size);
+
+		//ShibbolethのIDの関連付け処理
+		$login_external = $this->session->getParameter(array('login_external'));
+		$externalId = $login_external["external_id"];
+		if (!empty($externalId)) {
+			if (!$this->loginAction->setExternalMapping($externalId, $this->user_id, _LOGIN_CERT_SHIBBOLETH)) {
+				return 'db_error';
+			}
+			$this->session->removeParameter(array('login_external'));
+		}
 
 		//最終ログイン日時、前回ログイン日時更新
 	    if(!empty($this->user_id)) {
@@ -147,6 +159,23 @@ class Login_Action_Main_Init extends Action
 				$this->request->setParameter("_redirect_url", $active_page['permalink']);
 			} else {
 				$this->request->setParameter("_redirect_url", "?".ACTION_KEY."=".$active_page['action_name']."&page_id=".$active_page['page_id'].$active_page['parameters']);
+			}
+		}
+
+		//OpenID URL(とOP)がセッションに記録されていれば、
+		//セッションのOpenID URL(とOP)をクリア後,
+		//それを認証マッピングテーブルに登録しておく。
+		//
+		$openid_url_and_op = $this->session->getParameter('_openid_url_and_op');
+
+		list($openid_url, $op) = explode('|', $this->session->getParameter('_openid_url_and_op'));
+		if( (isset($openid_url) && is_string($openid_url) && strlen($openid_url) > 0) &&
+			(isset($op) && is_string($op) && strlen($op) > 0) ){
+
+			$this->session->removeParameter('_openid_url_and_op');
+
+			if($this->_entryOpenidurl2Mapping($openid_url, $this->user_id, $op) === false){
+				return 'db_error';
 			}
 		}
 
@@ -288,5 +317,36 @@ class Login_Action_Main_Init extends Action
 		}
 		return $page;
     }
+    /**
+     * OpenIDURL情報をMappingテーブルに登録する
+     *
+     * @return boolean 成功/失敗
+     * @access  public
+     */
+	function _entryOpenidurl2Mapping($openid_url, $user_id, $op)
+	{
+		$where = array(		'user_id' => $user_id,
+							'entityid' => $op,
+							'auth_type' => 1
+		);
+		$params = array(	'external_id' => $openid_url,
+							'user_id' => $user_id,
+							'entityid' => $op,
+  							'auth_type' => _LOGIN_CERT_OPENID
+		);
+		$result = $this->db->selectExecute('login_external_user_mapping', $where );
+		if(is_array($result) && count($result) > 0) {
+			if(count($result) > 1) {
+				//このOpenID URLが複数の会員で共有されている。これは論理エラーであるので、更新してはならない。
+				return false;
+			}
+
+			$result = $this->db->updateExecute('login_external_user_mapping', $params, $where, true);
+		}
+		else {
+			$result = $this->db->insertExecute('login_external_user_mapping', $params, true);
+		}
+		return ($result == false) ? false : true;
+	}
 }
 ?>

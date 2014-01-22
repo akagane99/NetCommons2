@@ -1,0 +1,28 @@
+<{strip}>
+	<h1><{$lang.openid_authentication}></h1>
+    <p>
+      <{$lang.openid_authentication_guide}>
+    </p>
+    <{if $action.msg != null }>
+    <div class="alert"><{$action.msg}></div>
+    <{/if}>
+    <{if $action.error != null }>
+    <div class="error"><{$action.error}></div>
+    <{/if}>
+    <{if $action.success != null }>
+    <div class="success"><{$action.success}></div>
+    <{/if}>
+
+    <div id="verify-form">
+      <form id="openid_verify_<{$id}>" method="get" action="#" onsubmit="return false;">
+        <{$lang.openid_opname}>
+		<select id="openid_identifier<{$id}>" name="openid_identifier">
+        <{foreach from=$action.openid_opids key=i item=opid}>
+          <option value="<{$opid|smarty:nodefaults}>" /><{$action.openid_opnames.$i|smarty:nodefaults}></option>
+        <{/foreach}>
+		</select>
+        <input type="button" onclick="loginCls['<{$id}>'].openidRpTryauth(this.form, 'login_view_main_openid_rp_tryauth'); return false;" value="<{$lang.openid_op_select}>" />
+      </form>
+    </div>
+<{/strip}>
+<{include file="login_script.html"}>

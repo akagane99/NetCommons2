@@ -19,14 +19,14 @@ class Users_Action
 	 * @access	private
 	 */
 	var $_db = null;
-	
+
 	/**
 	 * @var DIコンテナを保持
 	 *
 	 * @access	private
 	 */
 	var $_container = null;
-	
+
 	/**
 	 * コンストラクター
 	 *
@@ -36,10 +36,10 @@ class Users_Action
 		$this->_container =& DIContainerFactory::getContainer();
 		$this->_db =& $this->_container->getComponent("DbObject");
 	}
-	
+
 	/**
 	 * 会員テーブルUpdate
-	 * 
+	 *
 	 * @param   array   $params        パラメータ引数
 	 * @param   array   $where_params  Whereパラメータ引数
 	 * @return boolean true or false
@@ -51,7 +51,7 @@ class Users_Action
 
 	/**
 	 * 会員テーブルInsert
-	 * 
+	 *
 	 * @param   array   $params     パラメータ引数
 	 * @return boolean true or false
 	 * @access	public
@@ -81,7 +81,7 @@ class Users_Action
 
 	/**
 	 * 項目テーブルInsert
-	 * 
+	 *
 	 * @param   array   $params     パラメータ引数
 	 * @return boolean true or false
 	 * @access	public
@@ -91,13 +91,13 @@ class Users_Action
 		if ($item_id === false) {
 			return false;
 		}
-		
+
 		return $item_id;
 	}
 
 	/**
 	 * 項目説明文テーブルInsert
-	 * 
+	 *
 	 * @param   array   $params     パラメータ引数
 	 * @return boolean true or false
 	 * @access	public
@@ -112,7 +112,7 @@ class Users_Action
 
 	/**
 	 * 項目選択式テーブルInsert
-	 * 
+	 *
 	 * @param   array   $params     パラメータ引数
 	 * @return boolean true or false
 	 * @access	public
@@ -124,10 +124,10 @@ class Users_Action
 
 		return $this->_db->insertExecute("items_options", $db_params);
 	}
-	
+
 	/**
 	 * 項目権限リンクテーブルInsert
-	 * 
+	 *
 	 * @param   array   $params     パラメータ引数
 	 * @return boolean true or false
 	 * @access	public
@@ -135,10 +135,10 @@ class Users_Action
 	function insItemsAuthLink($params = array()) {
 		return $this->_db->insertExecute("items_authorities_link", $params, true);
 	}
-	
+
 	/**
 	 * 項目権限リンクテーブルUpdate
-	 * 
+	 *
 	 * @param   array   $params        パラメータ引数
 	 * @param   array   $where_params  Whereパラメータ引数
 	 * @return boolean true or false
@@ -147,10 +147,10 @@ class Users_Action
 	function updItemsAuthLink($params=array(), $where_params=array(), $footer_flag=true) {
 		return $this->_db->updateExecute("items_authorities_link", $params, $where_params, $footer_flag);
 	}
-	
+
 	/**
 	 * 会員項目リンクテーブルInsert
-	 * 
+	 *
 	 * @param   array   $params     パラメータ引数
 	 * @return boolean true or false
 	 * @access	public
@@ -161,7 +161,7 @@ class Users_Action
 
 	/**
 	 * 項目テーブルUpdate
-	 * 
+	 *
 	 * @param   array   $params        パラメータ引数
 	 * @param   array   $where_params  Whereパラメータ引数
 	 * @return boolean true or false
@@ -173,7 +173,7 @@ class Users_Action
 
 	/**
 	 * 項目説明文テーブルUpdate
-	 * 
+	 *
 	 * @param   array   $params        パラメータ引数
 	 * @param   array   $where_params  Whereパラメータ引数
 	 * @return boolean true or false
@@ -185,7 +185,7 @@ class Users_Action
 
 	/**
 	 * 項目選択式テーブルUpdate
-	 * 
+	 *
 	 * @param   array   $params        パラメータ引数
 	 * @param   array   $where_params  Whereパラメータ引数
 	 * @return boolean true or false
@@ -197,7 +197,7 @@ class Users_Action
 
 	/**
 	 * 会員項目リンクテーブルUpdate
-	 * 
+	 *
 	 * @param   array   $params        パラメータ引数
 	 * @param   array   $where_params  Whereパラメータ引数
 	 * @return boolean true or false
@@ -209,7 +209,7 @@ class Users_Action
 
 	/**
 	 * 会員項目リンクテーブルUpdate
-	 * 
+	 *
 	 * @param   array   $params        パラメータ引数
 	 * @param   array   $where_params  Whereパラメータ引数
 	 * @return boolean true or false
@@ -283,10 +283,10 @@ class Users_Action
 		if (!$result) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 	/**
 	 * users_items_linkテーブルDelete
 	 *　
@@ -297,11 +297,11 @@ class Users_Action
 	function delUsersItemsLinkById($item_id, $user_id = null)
 	{
 		if($user_id == null) {
-			$params = array( 
+			$params = array(
 				"item_id" => $item_id
 			);
 		} else {
-			$params = array( 
+			$params = array(
 				"item_id" => $item_id,
 				"user_id" => $user_id
 			);
@@ -313,7 +313,7 @@ class Users_Action
 		}
 		return true;
 	}
-	
+
 	/**
 	 * ItemDescテーブルDelete
 	 *　
@@ -323,7 +323,7 @@ class Users_Action
 	 */
 	function delItemDescById($item_id)
 	{
-		$params = array( 
+		$params = array(
 			"item_id" => $item_id
 		);
 		$result = $this->_db->deleteExecute("items_desc", $params);
@@ -333,7 +333,7 @@ class Users_Action
 		}
 		return true;
 	}
-	
+
 	/**
 	 * items_optionsテーブルDelete
 	 *　
@@ -343,7 +343,7 @@ class Users_Action
 	 */
 	function delItemOptionsById($item_id)
 	{
-		$params = array( 
+		$params = array(
 			"item_id" => $item_id
 		);
 		$result = $this->_db->deleteExecute("items_options", $params);
@@ -353,7 +353,7 @@ class Users_Action
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 会員データを削除する
 	 *
@@ -388,7 +388,7 @@ class Users_Action
 			_SPACE_TYPE_GROUP
 		);
 		$privateRoomsPerRole = $this->_db->execute($sql, $bindValues, null, null, true, array($this, '_fetchPrivateRoomPerRole'));
-		
+
 		$roles = array_keys($privateRoomsPerRole);
 		$sql = "SELECT M.action_name, "
 					. "M.delete_action, "
@@ -418,19 +418,24 @@ class Users_Action
 				}
 			}
 		}
-		
+
 		if (!$this->deleteByInOperator('users', $inValue)) {
 			return false;
 		}
-		
+
 		if (!$this->deleteByInOperator('users_items_link', $inValue)) {
 			return false;
 		}
-		
+
 		if (!$this->deleteByInOperator('pages_users_link', $inValue)) {
 			return false;
 		}
-		
+
+		// Shibboleth
+		if (!$this->deleteByInOperator('login_external_user_mapping', $inValue)) {
+			return false;
+		}
+
 		$sql = "UPDATE {uploads} "
 				. "SET "
 				. "garbage_flag = ? "
@@ -498,14 +503,14 @@ class Users_Action
 		if (empty($inValue)) {
 			return true;
 		}
-	
+
 		$sql = "DELETE FROM {" . $tableName . "} "
 				. "WHERE user_id IN (" . $inValue . ")";
 		if (!$this->_db->execute($sql)) {
 			$this->_db->addError();
 			return false;
 		}
-	
+
 		return true;
 	}
 }

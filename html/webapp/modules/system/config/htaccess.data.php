@@ -12,6 +12,7 @@
 $writing_data = "<IfModule mod_rewrite.c>
 RewriteEngine On
 RewriteBase ".$path."
+RewriteRule ^Shibboleth\.sso - [L]
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteRule (/images/|/css/|/js/|/themes/)(.*)$ ".$path."$1$2 [QSA,L]
 RewriteCond %{REQUEST_FILENAME} !-f

@@ -19,6 +19,9 @@ clsMobile.prototype = {
 	switchMobileImgdspOpt: function(el) {
 		commonCls.sendPost(this.id, 'action=mobile_action_admin_imgdspopt&mobile_imgdsp_size=' + el.value);
 	},
+	switchUseKetaiOpenid: function(el) {
+		commonCls.sendPost(this.id, 'action=mobile_action_admin_openid&mobile_use_ketai_openid=' + el.value);
+	},
 	switchUsed: function(el, module_id) {
 		var params = new Object();
 		params["callbackfunc"] = function(res) {

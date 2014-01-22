@@ -3,7 +3,7 @@
 /* vim: set expandtab tabstop=4 shiftwidth=4 softtabstop=4: */
 
 /**
- * 参加ルーム、アクセス状況、レポート、退会機能を表示できるかどうか
+ * 参加ルーム、アクセス状況、レポート、SSO情報および退会機能を表示できるかどうか
  *
  * @package     NetCommons.validator
  * @author      Noriko Arai,Ryuji Masukawa

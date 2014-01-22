@@ -1,0 +1,18 @@
+<{strip}>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="<{$header_field.meta_language}>" lang="<{$header_field.meta_language}>">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=<{$smarty.const._CHARSET}>" />
+<script language="JavaScript" type="text/javascript">
+function Init() {
+	parent.document.getElementById('<{$smarty.request._attachment_callback}>').className = "_attachment_end";
+}
+</script>
+</head>
+<body onload="Init();">
+	<script class="nc_script" type="text/javascript">
+		parent.location.href='<{$action.redirect_url|smarty:nodefaults}>';
+	</script>
+</body>
+</html>
+<{/strip}>

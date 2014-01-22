@@ -26,6 +26,7 @@ class Userinf_View_Mobile_Userdetail_Init extends Action
     var $session = null;
     var $pagesView = null;
     var $configView = null;
+	var $loginOpenid = null;
     
     // 値をセットするため
     var $items = null;
@@ -34,6 +35,10 @@ class Userinf_View_Mobile_Userdetail_Init extends Action
     var $private_page_id = null;
     var $private_page_name = null;
     var $private_permalink = null;
+
+    var $openid_cnt = null;
+	var $disp_del_flag = null;
+    var $openid_uses = null;
 
 	/**
 	 * execute実行
@@ -96,6 +101,35 @@ class Userinf_View_Mobile_Userdetail_Init extends Action
 			$this->private_permalink = $buf_page_private[0]['permalink'];
 			if($this->private_permalink != '') $this->private_permalink .= '/';
     	}
+		//
+		// SSO情報 (TODO: 今後SSOの情報が増えれば、Menu上ここから独立させたほうがよい)
+		//
+        //$this->openid_uses = (($openid_uses = $this->loginOpenid->getOpenidUses()) == _ON) ? _ON : _OFF;
+        $this->openid_uses = (($openid_uses = $this->loginOpenid->getOpenidUsesForMobile()) == _ON) ? _ON : _OFF;
+        if($this->openid_uses != _ON){
+            //OpenID設定無効につき、移行の処理はしない。
+            return 'success';
+        }
+
+        $this->openid_cnt = $this->loginOpenid->getOpenidUrlCnt($this->user_id);
+
+        //削除ボタンをだすかださないかの判断
+        //ログインしている人のuser_id
+        $container =& DIContainerFactory::getContainer();
+        $session =& $container->getComponent("Session");
+        $login_user_id = $session->getParameter('_user_id');
+        if (isset($login_user_id)){
+            if($login_user_id == $this->user_id){
+                //ログインしているの人が本人なので、削除ボタンを出す。
+                $this->disp_del_flag = '1';
+            } else {
+                if ($session->getParameter('_user_auth_id') == _AUTH_ADMIN) {
+                    //ログインしているの権限が管理者権限者なので、削除ボタンを出す。
+                    $this->disp_del_flag = '1';
+                }
+            }
+        }
+
         return 'success';
     }
 }

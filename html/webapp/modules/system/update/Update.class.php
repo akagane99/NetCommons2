@@ -231,6 +231,69 @@ class System_Update extends Action
 			}
 		}
 
+		// openid_usesを指定できるようにする
+		$params = array('openid_uses');
+		$sql = "SELECT COUNT(*) FROM {config} WHERE conf_name = ?";
+		$counts =$this->db->execute($sql, $params, null, null, false);
+		if ($counts === false) {
+			return false;
+		}
+		$count = intval($counts[0][0]);
+		if ($count == 0) {
+			$params = array(
+				'conf_modid' => _SYS_CONF_MODID,
+				'conf_catid' => _SERVER_CONF_CATID,
+				'conf_name' => 'openid_uses',
+				'conf_value' => _OFF
+			);
+			$result = $this->db->insertExecute('config', $params, true, 'conf_id');
+			if ($result === false) {
+				return false;
+			}
+			$params = array(
+				'conf_modid' => _SYS_CONF_MODID,
+				'conf_catid' => _SERVER_CONF_CATID,
+				'conf_name' => 'openid_opids',
+				'conf_value' => ''
+			);
+			$result = $this->db->insertExecute('config', $params, true, 'conf_id');
+			if ($result === false) {
+				return false;
+			}
+			$params = array(
+				'conf_modid' => _SYS_CONF_MODID,
+				'conf_catid' => _SERVER_CONF_CATID,
+				'conf_name' => 'openid_opnames',
+				'conf_value' => ''
+			);
+			$result = $this->db->insertExecute('config', $params, true, 'conf_id');
+			if ($result === false) {
+				return false;
+			}
+		}
+
+		// 外部認証を使用する
+		$params = array("use_external");
+		$sql = "SELECT COUNT(*) FROM {config} WHERE conf_name = ?";
+		$counts =$this->db->execute($sql, $params, null, null, false);
+		if ($counts === false) {
+			return false;
+		}
+
+		$count = intval($counts[0][0]);
+		if ($count == 0) {
+			$params = array(
+				"conf_modid" => _SYS_CONF_MODID,
+				"conf_catid" => _SERVER_CONF_CATID,
+				"conf_name" => "use_external",
+				"conf_value" => _OFF
+			);
+			$result = $this->db->insertExecute("config", $params, true, "conf_id");
+			if ($result === false) {
+				return false;
+			}
+		}
+
 		return true;
 	}
 }

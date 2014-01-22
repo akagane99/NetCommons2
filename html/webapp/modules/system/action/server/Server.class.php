@@ -30,6 +30,10 @@ class System_Action_Server extends Action
 	var $ldap_uses = null;
 	var $ldap_server = null;
 	var $ldap_domain = null;
+	var $openid_uses = null;
+	var $openid_opids = null;
+	var $openid_opnames = null;
+	var $use_external = null;
 
 	//使用コンポーネント
 	var $config = null;
@@ -145,6 +149,20 @@ class System_Action_Server extends Action
 
         $value = ($this->ldap_domain) ? $this->ldap_domain : '';
         if (!$this->_update('ldap_domain', $value)) return 'error';
+
+		//OpenID書き込み
+    	$value = ($this->openid_uses) ? _ON : _OFF;
+        if (!$this->_update('openid_uses', $value)) return 'error';
+
+        $value = ($this->openid_opids) ? $this->openid_opids : '';
+        if (!$this->_update('openid_opids', $value)) return 'error';
+
+        $value = ($this->openid_opnames) ? $this->openid_opnames : '';
+        if (!$this->_update('openid_opnames', $value)) return 'error';
+
+		//shibboleth書き込み
+		$value = ($this->use_external) ? intval($this->use_external) : _OFF;
+		if (!$this->_update('use_external', $value)) return 'error';
 
     	return 'success';
     }

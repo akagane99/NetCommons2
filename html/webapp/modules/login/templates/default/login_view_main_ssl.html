@@ -10,6 +10,9 @@
 	</iframe>
 
 	<div class="login_popup_sslcancel_btn">
+		<{if $action.openid_uses == 1 && $action.openid_url != null && $action.block_id == 0}><{* 位置調整 *}>
+			<br />
+		<{/if}>
 		<{include file="login_cancel_button.html"}>
 	</div>
 
@@ -23,8 +26,33 @@
 				<{$lang.login_lost_password|smarty:nodefaults}>
 			</a>
 		</div>
+        <{* OpenID *}>
+        <{if $action.openid_uses == 1 && $action.openid_url == null}>
+            <div class="login_embedded_opid_list_link">
+                <a class="link" href="<{if $smarty.server.HTTPS|lower == 'on'}><{$smarty.const.BASE_URL_HTTPS}><{else}><{$smarty.const.BASE_URL}><{/if}><{$smarty.const.INDEX_FILE_NAME}>?active_center=login_view_main_openid_rp_tryauth">
+                    <{$lang.login_openid_login|smarty:nodefaults}>
+                </a>
+            </div>
+        <{/if}>
 	<{/if}>
 
+	<{if ($action.use_external == _ON && LOGIN_USE_SHIBBOLETH_DS == _ON && $action.isMapping == _OFF) }>
+		<div class="login_embedded_ds_link">
+			<a class="link" href="<{$smarty.const.BASE_URL_HTTPS|smarty:nodefaults}><{$smarty.const.INDEX_FILE_NAME}>?active_center=login_view_main_discovery">
+				<{$lang.login_other_discovery_service|smarty:nodefaults}>
+			</a>
+		</div>
+	<{/if}>
+
+<{***
+	<{if ($action.use_external == _ON && LOGIN_USE_SHIBBOLETH_DS == _ON && $action.isMapping == _OFF) }>
+		<div class="login_embedded_ds_link">
+			<a class="link" href="<{$smarty.const.BASE_URL_HTTPS|smarty:nodefaults}>/secure/index.php">
+				mutaguchi-IdP
+			</a>
+		</div>
+	<{/if}>
+***}>
 </div>
 
 <{include file="login_script.html"}>
@@ -36,9 +64,15 @@
 	}
 
 	<{if empty($action.block_id|smarty:nodefaults) && empty($action.error_mes|smarty:nodefaults)}>
-		loginCls['<{$id}>'].sslIframeSrc = "<{$action.ssl_base_url}><{$smarty.const.INDEX_FILE_NAME}>?action=login_view_main_init&block_id=<{$action.block_id}>&parent_id=<{$id}>&error_mes=<{$action.error_mes}>&http=<{$smarty.const._ON}>&_redirect_url=<{$action.redirect_url}>";
+		<{if $action.openid_uses == 1 && $action.openid_url != null && $action.block_id == 0}>
+			$('login_ssl_iframe<{$id}>').src = "<{$action.ssl_base_url}><{$smarty.const.INDEX_FILE_NAME}>?action=login_view_main_init&block_id=<{$action.block_id}>&parent_id=<{$id}>&error_mes=<{$action.error_mes}>&http=<{$smarty.const._ON}>&_redirect_url=<{$action.redirect_url}>&finauth_chain=1";
+		<{else}>
+//			loginCls['<{$id}>'].sslIframeSrc = "<{$action.ssl_base_url}><{$smarty.const.INDEX_FILE_NAME}>?action=login_view_main_init&block_id=<{$action.block_id}>&parent_id=<{$id}>&error_mes=<{$action.error_mes}>&http=<{$smarty.const._ON}>&_redirect_url=<{$action.redirect_url}>";
+			loginCls['<{$id}>'].sslIframeSrc = "<{$action.iframeSrc|smarty:nodefaults}>";
+		<{/if}>
 	<{else}>
-		$('login_ssl_iframe<{$id}>').src = "<{$action.ssl_base_url}><{$smarty.const.INDEX_FILE_NAME}>?action=login_view_main_init&block_id=<{$action.block_id}>&parent_id=<{$id}>&error_mes=<{$action.error_mes}>&http=<{$smarty.const._ON}>&_redirect_url=<{$action.redirect_url}>";
+//		$('login_ssl_iframe<{$id}>').src = "<{$action.ssl_base_url}><{$smarty.const.INDEX_FILE_NAME}>?action=login_view_main_init&block_id=<{$action.block_id}>&parent_id=<{$id}>&error_mes=<{$action.error_mes}>&http=<{$smarty.const._ON}>&_redirect_url=<{$action.redirect_url}>";
+		$('login_ssl_iframe<{$id}>').src = "<{$action.iframeSrc|smarty:nodefaults}>";
 	<{/if}>
 	loginCls["<{$id}>"].setButtonStyle($("login_cancel_button<{$id}>"));
 //-->

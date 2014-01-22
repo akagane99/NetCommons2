@@ -5,13 +5,13 @@
 		<li class="userinf_navi_btns">
 			<{if $smarty.session._permalink_flag}>
 			<a href="<{$smarty.const.BASE_URL}>/<{$action.private_permalink}>" class="link userinf_navi_btn">
-			
+
 			<{else}>
 			<a href="<{$smarty.const.BASE_URL}><{$smarty.const.INDEX_FILE_NAME}>?action=<{$smarty.const.DEFAULT_ACTION}>&amp;page_id=<{$action.private_page_id}>" class="link userinf_navi_btn">
 			<{/if}>
 				<img class="userinf_navi_img" src="<{"home.gif"|get_modules_image}>" alt="" title="<{$lang.userinf_private_space_move|smarty:nodefaults|sprintf:$action.private_page_name}>" />
 				<{$lang.userinf_private_space_move|smarty:nodefaults|sprintf:$action.private_page_name}>
-			</a>		
+			</a>
 		</li>
 		<li>
 			&nbsp;
@@ -36,7 +36,7 @@
 <{/if}>
 <{*会員情報詳細画面*}>
 <div class="outerdiv">
-	
+
 	<div class="top_description">
 		<{$lang.userinf_top_description|smarty:nodefaults}>
 	</div>

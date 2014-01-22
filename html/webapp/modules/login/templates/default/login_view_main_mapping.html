@@ -1,0 +1,45 @@
+<{strip}>
+
+<div class="login_ssl_outer_rememberme">
+
+	<h1 class="th_login_blocktitle" style="height:auto;font-size:150%">
+		<{$lang.login_mapping_title|smarty:nodefaults}>
+	</h1>
+	<div class="top_description login_mapping_description">
+		<{$lang.login_mapping_description|smarty:nodefaults}>
+	</div>
+
+	<table class="login_mapping_outer" summary="<{$lang._dialog_name|smarty:nodefaults}>">
+		<tr>
+			<td class="login_mapping_table_exists_account">
+				<div class="top_description">
+					<{$lang.login_mapping_exists_account_desc|smarty:nodefaults}>
+				</div>
+
+				<iframe class="<{$action.formClassName}> login_mapping_iframe" src="<{$action.iframeSrc|smarty:nodefaults}>" scrolling="no" frameborder="0">
+				</iframe>
+				<div class="login_popup_sslcancel_btn login_mapping_cancel_btn">
+					<{assign var="cancel_url" value=$smarty.const.BASE_URL}>
+					<input id="login_mapping_cancel_button<{$id}>" class="login_cancel_button" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="loginCls['<{$id}>'].shibbolethLogout();location.href='<{$cancel_url}>';" onmouseover="Element.addClassName(this, 'login_cancel_button_hover');" onmouseout="Element.removeClassName(this, 'login_cancel_button_hover');" onfocus="Element.addClassName(this, 'login_cancel_button_hover');" onblur="Element.removeClassName(this, 'login_cancel_button_hover');" />
+				</div>
+			</td>
+			<td class="login_mapping_table_no_account">
+				<div class="top_description">
+					<{$lang.login_mapping_no_account_desc|smarty:nodefaults}>
+				</div>
+				<div class="login_mapping_newaccount_btn">
+					<{assign var="signup_url" value="`$smarty.const.BASE_URL_HTTPS`?active_center=login_view_main_autoregist&prefix_id_name=login_popup_autoregist"}>
+					<input id="login_mapping_newaccount_button<{$id}>" class="login_login_button" type="button" value="<{$lang.login_mapping_autoregist|smarty:nodefaults}>" onclick="location.href='<{$signup_url}>';" onmouseover="Element.addClassName(this, 'login_cancel_button_hover');" onmouseout="Element.removeClassName(this, 'login_cancel_button_hover');" onfocus="Element.addClassName(this, 'login_cancel_button_hover');" onblur="Element.removeClassName(this, 'login_cancel_button_hover');" />
+				</div>
+			</td>
+		</tr>
+	</table>
+</div>
+
+<{/strip}>
+<{include file="login_script.html"}>
+
+<script class="nc_script" type="text/javascript">
+loginCls["<{$id}>"].setButtonStyle($("login_mapping_newaccount_button<{$id}>"));
+loginCls["<{$id}>"].setButtonStyle($("login_mapping_cancel_button<{$id}>"));
+</script>

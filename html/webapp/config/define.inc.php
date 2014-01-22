@@ -244,4 +244,7 @@ define("_MYSQL_FT_MIN_WORD_LEN",          4);
 //------モジュールアップデート間隔(ミリ秒)---------
 define('_MODULE_ALLUPDATE_INTERVALTIME', 0);
 
+//----------------ログイン認証-----------------------------------------
+define("_LOGIN_CERT_OPENID",1);			// OpenID認証
+define("_LOGIN_CERT_SHIBBOLETH",2);		// Shibboleth認証
 ?>

@@ -1,4 +1,11 @@
 <{strip}>
+
+<{if strpos($id, 'popup') === false}>
+<h1 class="th_login_blocktitle">
+	<{$lang.login_autoregist_title}>
+</h1>
+<{/if}>
+
 <div class="outerdiv" id="target<{$id}>">
 	<div class="top_description">
 		<{$lang.login_top_description|smarty:nodefaults|sprintf:$lang._regist|smarty:nodefaults}>
@@ -9,13 +16,18 @@
 		<tr>
 			<{foreach from=$action.items item=item_list}>
 			<td class="valign-top align-left">
+				<{* W3Cのエラー対応 *}>
+				<{assign var="tr_on" value=$smarty.const._OFF}>
+
 				<table class="widthmax" summary="">
+					<{* W3Cのエラー対応 *}>
+					<{assign var="tr_on" value=$smarty.const._ON}>
 					<{foreach from=$item_list item=item}>
 						<{assign var="item_id" value=$item.item_id}>
 						<{if $action.autoregist_use_items.$item_id == $item.item_id && $item.type != "label" && $item.type != "system"}>
 							<{* 会員詳細 *}>
-							<tr>
-								<th class="login_detail_head" scope="row">
+									<tr>
+										<th class="login_detail_head" scope="row">
 									<{if $item.type != $smarty.const.USER_TYPE_CHECKBOX &&  $item.type != $smarty.const.USER_TYPE_RADIO}>
 										<label for="login_items<{$id}>_<{$item.item_id}>">
 											<{$item.item_name}>
@@ -31,7 +43,7 @@
 								<td class="login_detail_detail" style="width:<{$conf.login_detail_min_width}>px;">
 									<{if $item.type == $smarty.const.USER_TYPE_TEXT}>
 										<{* テキスト *}>
-										<input name="items[<{$item.item_id}>]" id="login_items<{$id}>_<{$item.item_id}>" type="text" value="" <{$item.attribute|smarty:nodefaults}> />
+											<input name="items[<{$item.item_id}>]" id="login_items<{$id}>_<{$item.item_id}>" type="text" value="" <{$item.attribute|smarty:nodefaults}> />
 									<{elseif $item.type == $smarty.const.USER_TYPE_EMAIL || $item.type == $smarty.const.USER_TYPE_MOBILE_EMAIL}>
 										<{* email *}>
 										<input name="items[<{$item.item_id}>]" id="login_items<{$id}>_<{$item.item_id}>" type="text" value="" <{$item.attribute|smarty:nodefaults}> />
@@ -103,7 +115,7 @@
 										</select>
 									<{elseif $item.type == $smarty.const.USER_TYPE_PASSWORD}>
 										<{* パスワード *}>
-										<input  name="items[<{$item.item_id}>]" id="login_items<{$id}>_<{$item.item_id}>" type="password" value="" <{$item.attribute|smarty:nodefaults}> />
+											<input  name="items[<{$item.item_id}>]" id="login_items<{$id}>_<{$item.item_id}>" type="password" value="" <{$item.attribute|smarty:nodefaults}> />
 										</td>
 										</tr>
 										<tr>
@@ -115,7 +127,7 @@
 											<{$lang.login_require_flag|smarty:nodefaults}>
 										</th>
 										<td class="login_detail_detail" style="width:<{$conf.login_detail_min_width}>px;">
-										<input name="items_password_confirm[<{$item.item_id}>]" id="login_items_confirm<{$id}>_<{$item.item_id}>" type="password" value="" <{$item.attribute|smarty:nodefaults}> />
+											<input name="items_password_confirm[<{$item.item_id}>]" id="login_items_confirm<{$id}>_<{$item.item_id}>" type="password" value="" <{$item.attribute|smarty:nodefaults}> />
 									<{/if}>
 									<{if $item.description}>
 										<div class="login_desc">
@@ -134,8 +146,14 @@
 									<img src="<{""|get_image_url}>/images/common/blank.gif" alt="" style="height:0px; width:<{$conf.login_detail_min_width}>px;"/>
 								</td>
 							</tr>
-						<{/if}>
+							<{/if}>
+							<{* W3Cのエラー対応 *}>
+							<{assign var="tr_on" value=$smarty.const._ON}>
 					<{/foreach}>
+					<{if ($tr_on == _OFF) }>
+						<{* 空のtr,tdタグ挿入 *}>
+						<tr><td></td></tr>
+					<{/if}>
 				</table>
 			</td>
 			<{/foreach}>
@@ -147,24 +165,24 @@
 		<table class="outer" summary="<{$lang.login_autoregist_disclaimer|smarty:nodefaults}>">
 			<{* 利用許諾 *}>
 			<{if ($action.autoregist_disclaimer != "")}>
-				<tr>
-					<th class="login_detail_head" scope="row">
-						<label for="login_autoregist_disclaimer<{$id}>">
-							<{$lang.login_autoregist_disclaimer|smarty:nodefaults}>
-						</label>
-						<{$lang.login_require_flag|smarty:nodefaults}>
-					</th>
-					<td class="login_detail_detail">
-						<textarea id="login_autoregist_disclaimer<{$id}>" readonly="readonly" class="login_disclaimer" name="login_disclaimer" cols="75" rows="10">
-							<{$action.autoregist_disclaimer}>
-						</textarea>
-						<br />
-						<label for="login_autoregist_disclaimer_ok<{$id}>">
+			<tr>
+				<th class="login_detail_head" scope="row">
+					<label for="login_autoregist_disclaimer<{$id}>">
+						<{$lang.login_autoregist_disclaimer|smarty:nodefaults}>
+					</label>
+					<{$lang.login_require_flag|smarty:nodefaults}>
+				</th>
+				<td class="login_detail_detail">
+					<textarea id="login_autoregist_disclaimer<{$id}>" readonly="readonly" class="login_disclaimer" name="login_disclaimer" cols="75" rows="10">
+						<{$action.autoregist_disclaimer}>
+					</textarea>
+					<br />
+					<label for="login_autoregist_disclaimer_ok<{$id}>">
 							<input name="autoregist_disclaimer_ok" id="login_autoregist_disclaimer_ok<{$id}>"type="checkbox" />
-							<{$lang.login_autoregist_disclaimer_ok|smarty:nodefaults}>
-						</label>
-					</td>
-				</tr>
+						<{$lang.login_autoregist_disclaimer_ok|smarty:nodefaults}>
+					</label>
+				</td>
+			</tr>
 			<{/if}>
 			<{* 入力キー *}>
 			<{if ($action.autoregist_use_input_key == _ON) }>
@@ -190,10 +208,12 @@
 	<div class="btn-bottom">
 		<{* 決定 *}>
 		<input class="btn-width lined_btn" type="button" value="<{$lang._regist|smarty:nodefaults}>" onclick="loginCls['<{$id}>'].insAutoregist(this.form); return false;" />
-		<{* キャンセル *}>
-		<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>'); return false;" />
+		<{if strpos($id, 'popup') !== false}>
+			<{* キャンセル *}>
+			<input class="btn-width lined_btn" type="button" value="<{$lang._cancel|smarty:nodefaults}>" onclick="commonCls.removeBlock('<{$id}>'); return false;" />
+			<input type="hidden" name="prefix_id_name" value="login_popup_autoregist" />
+		<{/if}>
 	</div>
-	<input type="hidden" name="prefix_id_name" value="login_popup_autoregist" />
 	</form>
 </div>
 <{/strip}>

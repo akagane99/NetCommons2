@@ -30,6 +30,8 @@ class Mobile_View_Admin_Init extends Action
 
 	var	$gd_enable = null;
 
+	var $mobile_use_ketai_openid = null;
+
     /**
      * execute処理
      *
@@ -56,6 +58,7 @@ class Mobile_View_Admin_Init extends Action
 		else {
 			$this->mobile_imgdsp_size = $config['mobile_imgdsp_size']['conf_value'];
 		}
+    	$this->mobile_use_ketai_openid = $config['mobile_use_ketai_openid']['conf_value'];
 
 		$this->modules = $this->mobileView->getModules();
        	return 'success';

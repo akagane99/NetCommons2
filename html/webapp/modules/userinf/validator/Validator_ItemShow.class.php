@@ -32,7 +32,7 @@ class Userinf_Validator_ItemShow extends Validator
 		$login_user_id = $session->getParameter("_user_id");
 		$login_user_auth_id = $session->getParameter("_user_auth_id");
 		
-		// $params[0] = item_name (def_USER_ITEM_ENTRY_ROOM or def_USER_ITEM_MONTHLY_NUM or def_USER_ITEM_MODULES_INFO)
+		// $params[0] = item_name (def_USER_ITEM_ENTRY_ROOM or def_USER_ITEM_MONTHLY_NUM or def_USER_ITEM_MODULES_INFO or def_USER_ITEM_SSO_INFO)
 		if(!isset($params[0])) return $errStr;
 		$item_name = preg_replace("/^def_/", "", $params[0]);
 		

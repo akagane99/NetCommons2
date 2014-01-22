@@ -15,6 +15,13 @@
 
 class Login_View_Main_Autoregist extends Action
 {
+	// リクエストパラメータを受け取るため
+	var $active_center = null;
+
+	// Filterによりセット
+	var $user_name = null;
+	var $email = null;
+
 	// コンポーネントを使用するため
 	var $configView = null;
 	var $usersView = null;
@@ -27,6 +34,11 @@ class Login_View_Main_Autoregist extends Action
 	var $autoregist_use_items_req = array();
 	var $autoregist_disclaimer = "";
 	var $autoregist_input_key = "";
+
+	var $user_name_jp = "";
+	var $user_name_en = "";
+	var $affiliation = "";
+	var $section = "";
 
     /**
      * 会員登録を受け付ける場合の自動登録画面表示
@@ -58,7 +70,33 @@ class Login_View_Main_Autoregist extends Action
     	$this->autoregist_disclaimer = $config['autoregist_disclaimer']['conf_value'];
     	$this->autoregist_use_input_key = $config['autoregist_use_input_key']['conf_value'];
 
-    	return 'success';
-    }
+		//Shibbolethの値をデフォルトとして設定
+		$login_external = $this->session->getParameter(array('login_external'));
+		if (!empty($login_external)) {
+			if (isset($login_external["user_name"])) {
+				$this->user_name_jp = $login_external["user_name"];
+			}
+			if (isset($login_external["user_name_en"])) {
+				$this->user_name_en = $login_external["user_name_en"];
+			}
+			if ($this->user_name == "") {
+			}
+			if ($this->email == "" && isset($login_external["email"])) {
+				$this->email = $login_external["email"];
+			}
+			if (isset($login_external["affiliation"])) {
+				$this->affiliation = $login_external["affiliation"];
+			}
+			if (isset($login_external["section"])) {
+				$this->section = $login_external["section"];
+			}
+		}
+
+		if($this->active_center != null) {
+			$this->session->removeParameter(array('login_external', 'redirect'));
+			return 'success_center';
+		}
+		return 'success';
+	}
 }
 ?>

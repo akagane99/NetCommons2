@@ -281,7 +281,8 @@ class Backup_Action_Main_Init extends Action
 					|| $file == 'config'
 					|| $file == 'style'
 					|| $file == 'uploads'
-					|| $file == 'templates_c') {
+					|| $file == 'templates_c'
+					|| $file == 'openidstore') {
 					continue;
 				}
 

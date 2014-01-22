@@ -1,0 +1,59 @@
+<{strip}>
+<{* SSO情報表示画面 *}>
+<div class="outerdiv">
+	<div class="top_description">
+		<{$lang.userinf_top_description|smarty:nodefaults|sprintf:$action.user.handle:$lang.userinf_view_main_ssoinfo|smarty:nodefaults}>
+	</div>
+</div>
+<table class="userinf_sso_list" cellspacing="0" cellpadding="0" summary="<{$lang.userinf_sso_list_summary|smarty:nodefaults}>">
+	<thead>
+		<tr>
+			<th class="userinf_sso_header_sso"><{$lang.userinf_header_sso|smarty:nodefaults}></th>
+			<th class="userinf_sso_header_status"><{$lang.userinf_header_status|smarty:nodefaults}></th>
+			<th class="userinf_sso_header_processing"></th>
+		</tr>
+	</thead>
+	<tbody>
+		<tr>
+			<td><{$lang.userinf_openid|smarty:nodefaults}></td>
+			<{if $action.openid_uses == "1"}>
+				<{if $action.openid_cnt > 0}>
+					<td><{$lang.userinf_openid_cnt_info|smarty:nodefaults|sprintf:$action.openid_cnt|smarty:nodefaults}></td>
+					<td>
+						<{if $action.disp_del_flag == "1"}>
+							<input class="lined_btn" type="button" value="<{$lang._delete|smarty:nodefaults}>" onclick="if(commonCls.confirm('<{$lang.userinf_confirm_del_openid_url|smarty:nodefaults}>')){commonCls.sendPost('<{$id}>',{'action':'userinf_action_main_delsso', 'user_id':'<{$action.user_id}>', 'auth_type':'1'},{'callbackfunc': function(res){setTimeout(function(){commonCls.sendView('<{$id}>',{'action':'userinf_view_main_ssoinfo','user_id':'<{$action.user_id}>'});}.bind(this), 200)}.bind(this)});} return false;" />
+						<{/if}>
+					</td>
+				<{else}>
+					<td><{$lang.userinf_no_openid|smarty:nodefaults}></td>
+					<td></td>
+				<{/if}>
+			<{else}>
+				<td><{$lang.userinf_sso_is_not_supported|smarty:nodefaults}></td>
+				<td></td>
+			<{/if}>
+		</tr>
+		<tr>
+			<td><{$lang.userinf_shibboleth|smarty:nodefaults}></td>
+			<{if $action.use_external == _ON}>
+				<{if $action.shibboleth_cnt > 0}>
+					<td><{$lang.userinf_sso_info_yes|smarty:nodefaults}></td>
+					<td>
+						<{if $action.disp_del_flag == "1"}>
+							<input class="lined_btn" type="button" value="<{$lang._delete|smarty:nodefaults}>" onclick="if(commonCls.confirm('<{$lang.userinf_shibboleth_delete_confirm|smarty:nodefaults}>')){commonCls.sendPost('<{$id}>',{'action':'userinf_action_main_delsso', 'user_id':'<{$action.user_id}>', 'auth_type':'<{$smarty.const._LOGIN_CERT_SHIBBOLETH}>'},{'callbackfunc': function(res){setTimeout(function(){commonCls.sendView('<{$id}>',{'action':'userinf_view_main_ssoinfo','user_id':'<{$action.user_id}>'});}.bind(this), 200)}.bind(this)});} return false;" />
+						<{/if}>
+					</td>
+				<{else}>
+					<td><{$lang.userinf_sso_info_no|smarty:nodefaults}></td>
+					<td></td>
+				<{/if}>
+			<{else}>
+				<td><{$lang.userinf_sso_is_not_supported|smarty:nodefaults}></td>
+				<td></td>
+			<{/if}>
+		</tr>
+	</tbody>
+</table>
+
+<{include file="userinf_script.html"}>
+<{/strip}>

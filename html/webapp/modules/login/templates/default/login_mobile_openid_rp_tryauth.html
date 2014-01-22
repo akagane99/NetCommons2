@@ -1,0 +1,67 @@
+<{strip}>
+	<h1><{$lang.openid_authentication}></h1>
+    <p>
+      <{$lang.openid_authentication_guide}>
+    </p>
+    <{if $action.msg != null }>
+    <{$action.msg}><br />
+    <{/if}>
+    <{if $action.error != null }>
+    <{$action.error}><br />
+    <{/if}>
+    <{if $action.success != null }>
+    <{$action.success}><br />
+    <{/if}>
+    <div id="verify-form">
+	  <form id="_openid_tryauth_form" method="post" action=".<{$smarty.const.INDEX_FILE_NAME}>">
+        <{$lang.openid_opname}>
+		<input id="_openid_tryauth_action" type="hidden" name="action" value="login_action_mobile_openid_rp_tryauth">
+		<select id="_openid_identifier" name="openid_identifier">
+        <{foreach from=$action.openid_opids key=i item=opid}>
+          <option value="<{$opid|smarty:nodefaults}>" /><{$action.openid_opnames.$i|smarty:nodefaults}></option>
+        <{/foreach}>
+		</select>
+        <input class="openid_tryauth_sbt" type="submit" value="<{$lang.openid_op_select}>" />
+      </form>
+    </div>
+    <{if $smarty.session._smartphone_flag == _ON}>
+        <script type="text/javascript">
+		  $(".openid_tryauth_sbt").bind("click", function(e) {
+			var url = $("#_openid_tryauth_form").attr("action");
+			var data = {};
+			data.action = $("#_openid_tryauth_action").attr("value");
+			data.openid_identifier = $("#_openid_identifier  option:selected").attr("value");
+			e.preventDefault();
+			$.post(url, data, function(res) {
+           	  var locstart = "__LocationStart__";
+           	  var locend = "__LocationEnd__";
+              var jsformstart = "__JavaScriptStart__";
+			  var jsformend = "__JavaScriptEnd__";
+              var target_loc = "", target_jsform = "";
+              var bd = null;
+			  var pos1 = (-1), pos2 = (-1);
+
+			  pos1 = res.indexOf(jsformstart);
+			  pos2 = res.indexOf(jsformend);
+			  if(pos1 != (-1) && pos2 !=(-1)){
+			    target_jsform = res.substr( pos1+jsformstart.length, pos2);
+                bd = $('body')[0];
+                bd.innerHTML = target_jsform;
+               	setTimeout( function() {
+                  document.forms[0].submit();
+                }, 200);
+                return;
+			  }
+			  pos1 = res.indexOf(locstart);
+			  pos2 = res.indexOf(locend);
+			  if(pos1 != (-1) && pos2 !=(-1)){
+			    target_loc = res.substr( pos1+locstart.length, pos2);
+               	location.href = target_loc;
+              	return;
+			  }
+
+			});
+		  });
+        </script>
+    <{/if}>
+<{/strip}>

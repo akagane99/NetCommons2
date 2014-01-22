@@ -31,6 +31,7 @@ class Login_Validator_Logincheck extends Validator
 		$configView =& $container->getComponent("configView");
 		$authoritiesView =& $container->getComponent("authoritiesView");
 
+		$loginView =& $container->getComponent("loginView");
 		$login_id = $session->getParameter("_login_id");
 
 		if (isset($login_id) && $login_id != 0) {
@@ -44,24 +45,68 @@ class Login_Validator_Logincheck extends Validator
 		$db =& $container->getComponent("DbObject");
 
 		if (is_array($attributes)) {
-			$md5 = $attributes[2];
-			if($md5 == 1) {
-				// 自動ログイン時
-				$params = array(
-								"login_id" => $attributes[0],
-								"password" => $attributes[1]
-							);
-			} else{
-				$params = array(
-								"login_id" => $attributes[0],
-								"password" => md5($attributes[1])
-							);
+
+			$login_ok = false;
+
+			// Shibbolethログイン
+			$login_external = $session->getParameter(array('login_external'));
+			$login_external_id = !empty($login_external) ? $login_external['external_id'] : "";
+
+			if (!empty($login_external_id) && empty($attributes[3])) {
+
+				$result = $loginView->getLoginByExternalId( $login_external_id, _LOGIN_CERT_SHIBBOLETH );
+
+				// 失敗
+				if ( empty( $result ) ) {
+					// 何もしない
+					$login_ok = false;
+				// 成功
+				} else {
+					$login_ok = true;
+					$normal_login = false;
+					$session->removeParameter(array('login_external'));
+				}
+
 			}
-			if ($this->ldapCheck($attributes[0], $attributes[1]) == false) {
-				$result = $db->execute("SELECT user_id,handle,role_authority_id,timezone_offset,last_login_time,system_flag,lang_dirname FROM {users} WHERE login_id=? AND password=? AND active_flag="._USER_ACTIVE_FLAG_ON,$params,0,null,false);
-			} else {
-				$result = $db->execute("SELECT user_id,handle,role_authority_id,timezone_offset,last_login_time,system_flag,lang_dirname FROM {users} WHERE login_id=? AND active_flag="._USER_ACTIVE_FLAG_ON,array($attributes[0]),0,null,false);
+
+			// 通常ログイン
+			if ($login_ok == false) {
+
+				//ログインの必須入力チェック
+				$requre_error = "";
+				if (strlen(trim($attributes[0],"\t \n\0　")) > 0) {
+				} else {
+					$requre_error .= sprintf(_REQUIRED, LOGIN_NAME)."\n";
+				}
+				//パスワードの必須入力チェック
+				if (strlen(trim($attributes[1],"\t \n\0　")) > 0) {
+				} else {
+					$requre_error .= sprintf(_REQUIRED, LOGIN_PASSWORD)."\n";
+				}
+				if ($requre_error != "") {
+					return $requre_error;
+				}
+
+				$md5 = $attributes[2];
+				if($md5 == 1) {
+					// 自動ログイン時
+					$params = array(
+									"login_id" => $attributes[0],
+									"password" => $attributes[1]
+								);
+				} else{
+					$params = array(
+									"login_id" => $attributes[0],
+									"password" => md5($attributes[1])
+								);
+				}
+				if ($this->ldapCheck($attributes[0], $attributes[1]) == false) {
+					$result = $db->execute("SELECT user_id,handle,role_authority_id,timezone_offset,last_login_time,system_flag,lang_dirname FROM {users} WHERE login_id=? AND password=? AND active_flag="._USER_ACTIVE_FLAG_ON,$params,0,null,false);
+				} else {
+					$result = $db->execute("SELECT user_id,handle,role_authority_id,timezone_offset,last_login_time,system_flag,lang_dirname FROM {users} WHERE login_id=? AND active_flag="._USER_ACTIVE_FLAG_ON,array($attributes[0]),0,null,false);
+				}
 			}
+
 			if(is_array($result)) {
 				if(isset($result[0][0])) {
 					$authorities =& $authoritiesView->getAuthorityById($result[0][2]);

@@ -14,8 +14,8 @@
  */
 class Login_Action_Main_Autoregist extends Action
 {
-	// リクエストパラメータを受け取るため
-	var $items = null;
+    // リクエストパラメータを受け取るため
+    var $items = null;
 	var $items_public = null;
 	var $items_reception = null;
 	//var $files = null;
@@ -27,38 +27,46 @@ class Login_Action_Main_Autoregist extends Action
 	var $autoregist_defroom = null;
 	var $filelist = null;
 	var $config = null;
+	var $permalink = null;
 
-	// 使用コンポーネントを受け取るため
-	var $pagesView = null;
-	var $usersView = null;
-	var $pagesAction = null;
-	var $usersAction = null;
-	var $configView = null;
-	var $db = null;
-	var $uploadsAction = null;
-	var $actionChain = null;
-	var $monthlynumberAction = null;
-	var $fileUpload = null;
-	var $timezoneMain = null;
-	var $mailMain = null;
-	var $session = null;
-	var $authoritiesView = null;
-	var $blocksAction = null;
+    // 使用コンポーネントを受け取るため
+    var $pagesView = null;
+    var $usersView = null;
+    var $pagesAction = null;
+    var $usersAction = null;
+    var $configView = null;
+    var $db = null;
+    var $uploadsAction = null;
+    var $actionChain = null;
+    var $monthlynumberAction = null;
+    var $fileUpload = null;
+    var $timezoneMain = null;
+    var $mailMain = null;
+    var $session = null;
+    var $authoritiesView = null;
+    var $blocksAction = null;
 
-	// 値をセットするため
-	var $error_flag = true;
-	var $post_mail_body = "";
-	//var $_attachment_list = null;
-	var $use_ssl = 0;
+	//shibboleth
+	var $loginAction = null;
 
-	/**
-	 * 会員受付登録
-	 *
-	 * @access  public
-	 */
-	function execute()
-	{
-		// ----------------------------------------------------------------------
+
+    // 値をセットするため
+    var $error_flag = true;
+    var $post_mail_body = "";
+    //var $_attachment_list = null;
+    var $use_ssl = 0;
+
+	//Filter_Whatsnewに値をセットするため
+	var $whatsnew = array();
+
+    /**
+     * 会員受付登録
+     *
+     * @access  public
+     */
+    function execute()
+    {
+    	// ----------------------------------------------------------------------
 		// --- 基本項目(usersテーブル)                                        ---
 		// ----------------------------------------------------------------------
 		if($this->autoregist_approver == _AUTOREGIST_SELF) {
@@ -497,6 +505,18 @@ class Login_Action_Main_Autoregist extends Action
 			}
 		}
 
+		//Shibbolethのマッピング処理
+		$externalId = $this->session->getParameter(array('login_external', 'external_id'));
+		if (!empty($externalId)) {
+			if (!$this->loginAction->setExternalMapping($externalId, $new_user_id, _LOGIN_CERT_SHIBBOLETH)) {
+				//return 'error';
+			}
+		}
+		//Shibbolethのセッション情報破棄
+		if (!empty($externalId)) {
+			$this->session->removeParameter(array('login_external'));
+		}
+
 		// ----------------------------------------------------------------------
 		// --- メール送信処理                                                 ---
 		// ----------------------------------------------------------------------
@@ -536,13 +556,12 @@ class Login_Action_Main_Autoregist extends Action
 
 		$this->mailMain->send();
 
-		$this->error_flag = false;
+    	$this->error_flag = false;
 
 		return 'success';
-	}
+    }
 
-
-	/**
+    /**
 	 * アクティベーションキーを取得
 	 *
 	 * @param string $length 生成するアクティベーションキーの桁数

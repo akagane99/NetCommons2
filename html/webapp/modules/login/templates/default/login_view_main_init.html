@@ -5,7 +5,7 @@
 	</div>
 <{/if}>
 
-<{if !empty($action.iframeSsl|smarty:nodefaults)}>
+<{if !empty($action.iframeSsl|smarty:nodefaults) && empty($action.isMapping|smarty:nodefaults)}>
 	<div class="login_ssl_font">
 		<{$lang.login_ssl|smarty:nodefaults}>
 	</div>
@@ -16,6 +16,12 @@
 	<input type="hidden" name="block_id" value="<{$action.block_id}>" />
 	<input type="hidden" name="_redirect_url" value="<{$action.redirect_url}>" />
 	<input type="hidden" name="_token" value="<{$action.token_value}>" />
+	<{if $action.openid_uses == 1 && $action.openid_url != null}>
+		<span style="color:red"><{$lang.login_loginwithopenid_msg|smarty:nodefaults}></span>
+	<{/if}>
+	<{if ($action.isMapping|smarty:nodefaults == _ON) }>
+		<input type="hidden" name="isMapping" value="<{$smarty.const._ON}>" />
+	<{/if}>
 
 	<label class="login_label">
 		<{$lang.login_name|smarty:nodefaults}>
@@ -51,6 +57,22 @@
 				<{$lang.login_lost_password|smarty:nodefaults}>
 			</a>
 		</div>
+		<{* OpenID *}>
+		<{if $action.openid_uses == 1 && $action.openid_url == null}>
+			<div class="login_embedded_opid_list_link">
+				<a class="link" href="<{if $smarty.server.HTTPS|lower == 'on'}><{$smarty.const.BASE_URL_HTTPS}><{else}><{$smarty.const.BASE_URL}><{/if}><{$smarty.const.INDEX_FILE_NAME}>?active_center=login_view_main_openid_rp_tryauth">
+					<{$lang.login_openid_login|smarty:nodefaults}>
+				</a>
+			</div>
+		<{/if}>
+		<{* Shibboleth *}>
+		<{if ($action.use_external == _ON && LOGIN_USE_SHIBBOLETH_DS == _ON && $action.isMapping == _OFF && $smarty.server.HTTPS|lower == 'on') }>
+			<div class="login_embedded_ds_link">
+				<a class="link" href="<{$smarty.const.BASE_URL_HTTPS|smarty:nodefaults}><{$smarty.const.INDEX_FILE_NAME}>?active_center=login_view_main_discovery">
+					<{$lang.login_other_discovery_service|smarty:nodefaults}>
+				</a>
+			</div>
+		<{/if}>
 	<{/if}>
 </form>
 <iframe id="targetFrame<{$id}>" name="targetFrame<{$id}>" class="display-none"></iframe>

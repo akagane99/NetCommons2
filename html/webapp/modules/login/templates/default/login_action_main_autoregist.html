@@ -32,11 +32,13 @@ function Init() {
 				<{$action.post_mail_body}>
 			</textarea>
 		</div>
-		<{* 各種ボタン *}>
-		<div class="btn-bottom">
-			<{* 閉じる *}>
-			<input class="btn-width lined_btn" type="button" value="<{$lang.login_close_btn|smarty:nodefaults}>" onclick="<{if ($action.use_ssl == _ON) }>parent.location.href='<{$smarty.const.BASE_URL|smarty:nodefaults}><{$smarty.const.INDEX_FILE_NAME|smarty:nodefaults}>';<{else}>commonCls.removeBlock('<{$id}>');<{/if}> return false;" />
-		</div>
+		<{if strpos($id, 'popup') !== false}>
+			<{* 各種ボタン *}>
+			<div class="btn-bottom">
+				<{* 閉じる *}>
+				<input class="btn-width lined_btn" type="button" value="<{$lang.login_close_btn|smarty:nodefaults}>" onclick="<{if ($action.use_ssl == _ON) }>parent.location.href='<{$smarty.const.BASE_URL|smarty:nodefaults}><{$smarty.const.INDEX_FILE_NAME|smarty:nodefaults}>';<{else}>commonCls.removeBlock('<{$id}>');<{/if}> return false;" />
+			</div>
+		<{/if}>
 	<{/if}>
 </body>
 </html>
